@@ -7,11 +7,17 @@ import (
 
 	"github.com/hashicorp/terraform/helper/mutexkv"
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 // Global MutexKV
 var mutexKV = mutexkv.NewMutexKV()
+
+// Serve registers the provider with Terraform and executes it.
+func Serve() {
+	plugin.Serve(&plugin.ServeOpts{ProviderFunc: Provider})
+}
 
 // Provider returns a terraform.ResourceProvider.
 func Provider() terraform.ResourceProvider {
